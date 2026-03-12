@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { getCart, saveCart } from "@/features/cart/cartService.js";
-import type { CartItem } from "@/features/cart/types";
+import type { CartItem } from "@/features/cart/types/types";
 import type { Product } from "@/features/products/types.js";
 
 export function useCart() {

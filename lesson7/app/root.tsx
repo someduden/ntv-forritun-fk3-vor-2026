@@ -1,22 +1,26 @@
-import type { LinksFunction } from "@remix-run/node";
+import type { LinksFunction } from '@remix-run/node';
 import {
   Links,
   Meta,
   Outlet,
   Scripts,
   ScrollRestoration,
-} from "@remix-run/react";
+} from '@remix-run/react';
 
-import appStyles from "./app.css?url";
+import appStyles from './app.css?url';
+import { ThemeProvider } from './components/GlobalContext';
 
 export const links: LinksFunction = () => [
-  { rel: "stylesheet", href: appStyles },
+  { rel: 'stylesheet', href: appStyles },
 ];
 
 export function meta() {
   return [
-    { title: "Remix Theme App" },
-    { name: "description", content: "Simple Remix app with light and dark theme" },
+    { title: 'Remix Theme App' },
+    {
+      name: 'description',
+      content: 'Simple Remix app with light and dark theme',
+    },
   ];
 }
 
@@ -30,9 +34,11 @@ export default function App() {
         <Links />
       </head>
       <body>
-        <Outlet />
-        <ScrollRestoration />
-        <Scripts />
+        <ThemeProvider>
+          <Outlet />
+          <ScrollRestoration />
+          <Scripts />
+        </ThemeProvider>
       </body>
     </html>
   );

@@ -1,5 +1,5 @@
 import { useProducts } from '@/features/products/useProducts';
-import { useCart } from '@/features/cart/useCart';
+import { useCart } from '@/features/cart/hooks/useCart';
 import { ProductCard } from '@/features/products/ProductCard';
 
 export function ProductListPage() {

@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { ProductListPage } from '@/features/products/ProductListPage';
-import { CartPage } from '@/features/cart/CartPage';
+import { CartPage } from '@/features/cart/pages/CartPage';
 import './index.css';
 
 type Tab = 'products' | 'cart';
