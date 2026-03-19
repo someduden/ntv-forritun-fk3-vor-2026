@@ -8,6 +8,7 @@ import {
   CardFooter,
 } from '@/shared/components/ui/card';
 import { useRandomBook } from '../api/getApi';
+import { RecipeButton } from './RecipeButton';
 
 export function RecipeCard() {
   const { book, getRandomBook } = useRandomBook();
@@ -24,7 +25,7 @@ export function RecipeCard() {
         </CardDescription>
 
         <CardAction>
-          <button onClick={getRandomBook}>New Book</button>
+          <RecipeButton onClick={getRandomBook} />
         </CardAction>
       </CardHeader>
 

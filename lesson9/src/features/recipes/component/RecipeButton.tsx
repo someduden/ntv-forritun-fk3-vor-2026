@@ -1,11 +1,8 @@
 import { Button } from '@/shared/components/ui/button';
-import { useRandomBook } from '../api/getApi';
 
-export function RecipeButton() {
-  const { book, getRandomBook } = useRandomBook();
-
+export function RecipeButton({ onClick }: { onClick: () => void }) {
   return (
-    <Button className="text-black" onClick={getRandomBook}>
+    <Button className="text-black" onClick={onClick}>
       Press for a book
     </Button>
   );
