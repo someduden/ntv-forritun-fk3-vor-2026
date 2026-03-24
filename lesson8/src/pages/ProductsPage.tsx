@@ -1,5 +1,5 @@
 import { Products } from '@/features/products';
-import { useCart } from '@/features/cart/context/useCart';
+import { useAppStore } from '@/shared/store/appStore';
 
 export function ProductsPage() {
   // const { addToCart } = useCart();
