@@ -1,28 +1,13 @@
 import './App.css';
-import { useTasks } from './context/TaskContext';
+import AddTaskForm from './features/tasks/AddTaskForm';
+import TaskList from './features/tasks/TaskList';
 
 function App() {
-  const { state, dispatch } = useTasks();
-
   return (
     <div>
-      <h1>Tasks: {state.tasks.length}</h1>
-
-      <button
-        onClick={() =>
-          dispatch({
-            type: 'ADD_TASK',
-            payload: {
-              id: crypto.randomUUID(),
-              title: 'my first task',
-              completed: false,
-              projectId: 'default',
-            },
-          })
-        }
-      >
-        Add Task
-      </button>
+      <h1>Team Task Hub</h1>
+      <AddTaskForm />
+      <TaskList />
     </div>
   );
 }
