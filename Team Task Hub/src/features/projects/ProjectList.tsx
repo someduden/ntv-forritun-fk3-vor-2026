@@ -16,7 +16,8 @@ function ProjectList({ selectedProjectId, onSelect }: Props) {
       </Button>
 
       {state.projects.map((project) => (
-        <button
+        <Button
+          variant={'outline'}
           key={project.id}
           onClick={() => onSelect(project.id)}
           style={{
@@ -24,7 +25,7 @@ function ProjectList({ selectedProjectId, onSelect }: Props) {
           }}
         >
           {project.name}
-        </button>
+        </Button>
       ))}
     </div>
   );

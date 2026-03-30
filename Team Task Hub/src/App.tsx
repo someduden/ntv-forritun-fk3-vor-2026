@@ -3,6 +3,7 @@ import './App.css';
 import AddTaskForm from './features/tasks/AddTaskForm';
 import TaskList from './features/tasks/TaskList';
 import ProjectList from './features/projects/ProjectList';
+import AddProjectForm from './features/projects/AddProjectForm';
 
 function App() {
   const [selectedProjectId, setSelectedProjectId] = useState<string | null>(
@@ -12,6 +13,8 @@ function App() {
   return (
     <div>
       <h1>Team Task Hub</h1>
+
+      <AddProjectForm />
 
       <ProjectList
         selectedProjectId={selectedProjectId}

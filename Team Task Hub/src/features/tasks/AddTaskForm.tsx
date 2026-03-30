@@ -1,43 +1,54 @@
 import { useTasks } from '@/hooks/useTasks';
 import { Button } from '@/shared/components/ui/button';
-import { useState } from 'react';
+import { taskSchema } from '../schema/taskSchema';
+import { Input } from '@/shared/components/ui/input';
+import { useFormValidation } from '@/hooks/useFormValidation';
+import { useEffect } from 'react';
 
 type Props = {
   selectedProjectId: string | null;
 };
 
 function AddTaskForm({ selectedProjectId }: Props) {
-  const [title, setTitle] = useState('');
   const { dispatch } = useTasks();
 
-  function handleSubmit(e: React.FormEvent) {
-    e.preventDefault();
-
-    if (!title.trim()) return;
-
-    dispatch({
-      type: 'ADD_TASK',
-      payload: {
-        id: crypto.randomUUID(),
-        title,
-        completed: false,
+  const { values, errors, handleChange, handleSubmit, reset } =
+    useFormValidation(
+      taskSchema,
+      {
+        title: '',
         projectId: selectedProjectId ?? 'default',
       },
-    });
+      (validData) => {
+        dispatch({
+          type: 'ADD_TASK',
+          payload: {
+            id: crypto.randomUUID(),
+            title: validData.title,
+            completed: false,
+            projectId: validData.projectId,
+          },
+        });
 
-    setTitle('');
-  }
+        reset();
+      },
+    );
+
+  useEffect(() => {
+    handleChange('projectId', selectedProjectId ?? 'default');
+  }, [selectedProjectId, handleChange]);
 
   return (
     <form onSubmit={handleSubmit}>
-      <input
-        value={title}
-        onChange={(e) => setTitle(e.target.value)}
+      <Input
+        value={values.title}
+        onChange={(e) => handleChange('title', e.target.value)}
         placeholder="New task..."
       />
-      <Button type="submit" variant={'outline'}>
-        Add
-      </Button>
+
+      {errors.title && <p style={{ color: 'red' }}>{errors.title}</p>}
+
+      <Button type="submit">Add</Button>
     </form>
   );
 }
