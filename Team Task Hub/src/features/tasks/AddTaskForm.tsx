@@ -1,7 +1,12 @@
-import { useTasks } from '@/context/TaskContext';
+import { useTasks } from '@/hooks/useTasks';
+import { Button } from '@/shared/components/ui/button';
 import { useState } from 'react';
 
-function AddTaskForm() {
+type Props = {
+  selectedProjectId: string | null;
+};
+
+function AddTaskForm({ selectedProjectId }: Props) {
   const [title, setTitle] = useState('');
   const { dispatch } = useTasks();
 
@@ -16,7 +21,7 @@ function AddTaskForm() {
         id: crypto.randomUUID(),
         title,
         completed: false,
-        projectId: 'default',
+        projectId: selectedProjectId ?? 'default',
       },
     });
 
@@ -30,7 +35,9 @@ function AddTaskForm() {
         onChange={(e) => setTitle(e.target.value)}
         placeholder="New task..."
       />
-      <button type="submit">Add</button>
+      <Button type="submit" variant={'outline'}>
+        Add
+      </Button>
     </form>
   );
 }

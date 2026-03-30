@@ -1,16 +1,24 @@
-import { useTasks } from '@/context/TaskContext';
+import { useTasks } from '@/hooks/useTasks';
 import TaskItem from './TaskItem';
 
-function TaskList() {
+type Props = {
+  selectedProjectId: string | null;
+};
+
+function TaskList({ selectedProjectId }: Props) {
   const { state } = useTasks();
 
-  if (state.tasks.length === 0) {
+  const filteredTasks = selectedProjectId
+    ? state.tasks.filter((task) => task.projectId === selectedProjectId)
+    : state.tasks;
+
+  if (filteredTasks.length === 0) {
     return <p>No tasks yet...</p>;
   }
 
   return (
     <div>
-      {state.tasks.map((task) => (
+      {filteredTasks.map((task) => (
         <TaskItem key={task.id} task={task} />
       ))}
     </div>

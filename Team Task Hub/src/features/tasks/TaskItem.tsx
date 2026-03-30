@@ -1,4 +1,5 @@
-import { useTasks } from '@/context/TaskContext';
+import { useTasks } from '@/hooks/useTasks';
+import { Button } from '@/shared/components/ui/button';
 import type { Task } from '@/types/types';
 
 type Props = {
@@ -27,13 +28,15 @@ function TaskItem({ task }: Props) {
         {task.title}
       </span>
 
-      <button
+      <Button
+        variant={'outline'}
+        size={'xs'}
         onClick={() =>
           dispatch({ type: 'DELETE_TASK', payload: { id: task.id } })
         }
       >
         X
-      </button>
+      </Button>
     </div>
   );
 }
