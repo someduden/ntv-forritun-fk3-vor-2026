@@ -12,7 +12,9 @@ type FormFieldProps<T extends React.InputHTMLAttributes<'input'>['type']> = {
   type: T;
   label?: string;
   error?: string;
-} & Omit<React.ComponentProps<'input'>, 'type' | 'checked'>;
+} & Omit<React.ComponentProps<'input'>, 'type' | 'checked'> & {
+    checked: T extends 'checkbox' ? boolean : undefined;
+  };
 
 function FormField<T extends HTMLInputTypeAttribute>({
   label,
@@ -32,5 +34,9 @@ function FormField<T extends HTMLInputTypeAttribute>({
     </div>
   );
 }
+
+const Example = () => {
+  return <FormField type="checkbox" checked />;
+};
 
 export { FormField };

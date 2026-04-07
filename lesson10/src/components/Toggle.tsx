@@ -22,11 +22,35 @@ type ChildrenProps = {
 function Toggle({ children, initialOpen }: ToggleProps) {
   const [isOpen, setIsOpen] = useState(initialOpen ?? false);
 
-  const toggle = () => setIsOpen((prev: any) => !prev);
+  const toggle = () => setIsOpen((prev: boolean) => !prev);
   const open = () => setIsOpen(true);
   const close = () => setIsOpen(false);
 
   return children({ isOpen, toggle, open, close });
 }
 
-export { Toggle };
+const Example = () => {
+  return (
+    <Toggle initialOpen={false}>
+      {({ isOpen, toggle, open, close }) => (
+        <div>
+          <button onClick={toggle}>{isOpen ? 'Hide' : 'Show'} content</button>
+          {isOpen && (
+            <div>
+              <p>This content is togglable!</p>
+              <button onClick={close}>Close</button>
+            </div>
+          )}
+          {!isOpen && (
+            <div>
+              <p>This content is togglable!</p>
+              <button onClick={open}>Open</button>
+            </div>
+          )}
+        </div>
+      )}
+    </Toggle>
+  );
+};
+
+export { Toggle, Foo };
