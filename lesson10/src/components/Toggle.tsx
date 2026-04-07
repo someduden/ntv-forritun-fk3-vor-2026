@@ -53,4 +53,4 @@ const Example = () => {
   );
 };
 
-export { Toggle, Foo };
+export { Toggle, Example };

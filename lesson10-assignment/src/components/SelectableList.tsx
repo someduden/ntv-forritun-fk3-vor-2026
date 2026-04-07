@@ -3,7 +3,24 @@
 // the `p` parameter in onSelect should be inferred as the Product type — not `any`.
 // `renderItem` should also receive the correctly typed item.
 // `selected` should be typed as T | null.
-function SelectableList({ items, renderItem, onSelect, selected, className }: any) {
+
+import type { ReactNode } from 'react';
+
+type SelectableListProps<T> = {
+  items: T[];
+  renderItem: (item: T) => ReactNode;
+  onSelect: (item: T) => void;
+  selected: T | null;
+  className?: string;
+};
+
+function SelectableList<T>({
+  items,
+  renderItem,
+  onSelect,
+  selected,
+  className,
+}: SelectableListProps<T>) {
   return (
     <ul className={`divide-y ${className || ''}`}>
       {items.map((item: any, index: number) => (
