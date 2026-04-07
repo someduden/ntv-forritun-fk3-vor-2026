@@ -5,20 +5,30 @@
 //    the component expects `checked: boolean` and `onChange` receives a boolean,
 //    and when type="text" (or default), it expects `value: string` and
 //    `onChange` receives a string. This prevents mixing incompatible props.
-function FormField({ label, error, type, ...props }: any) {
+
+import type { HTMLInputTypeAttribute } from 'react';
+
+type FormFieldProps<T extends React.InputHTMLAttributes<'input'>['type']> = {
+  type: T;
+  label?: string;
+  error?: string;
+} & Omit<React.ComponentProps<'input'>, 'type' | 'checked'>;
+
+function FormField<T extends HTMLInputTypeAttribute>({
+  label,
+  error,
+  type,
+  ...props
+}: FormFieldProps<T>) {
   return (
     <div className="flex flex-col gap-1">
-      {label && (
-        <label className="text-sm font-medium">{label}</label>
-      )}
+      {label && <label className="text-sm font-medium">{label}</label>}
       <input
         type={type || 'text'}
         className="rounded border px-3 py-2"
         {...props}
       />
-      {error && (
-        <span className="text-sm text-red-500">{error}</span>
-      )}
+      {error && <span className="text-sm text-red-500">{error}</span>}
     </div>
   );
 }

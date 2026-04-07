@@ -4,26 +4,56 @@
 // (typed as T[K]) and the full row (typed as T).
 // `data` should be T[].
 // This ensures that typos in column keys are caught at compile time.
-function Table({ data, columns, className }: any) {
+
+type Col<
+  T,
+  K extends keyof T & (string | number) = keyof T & (string | number),
+> = {
+  header: string;
+  index: K;
+  render?: (cellValue: T[keyof T], row: T) => string;
+};
+
+type RowData = {
+  value: string;
+};
+
+type Row<T extends RowData = RowData> = {
+  id: string;
+} & T;
+
+type TableProps<
+  T extends Row,
+  K extends keyof T & (string | number) = keyof T & (string | number),
+> = {
+  data: T[];
+  columns: Col<T, K>[];
+  className: string;
+};
+
+function Table<T extends Row>({ data, columns, className }: TableProps<T>) {
   return (
     <table className={`w-full border-collapse ${className || ''}`}>
       <thead>
         <tr>
-          {columns.map((col: any) => (
-            <th key={col.key} className="border-b p-2 text-left font-semibold">
+          {columns.map((col) => (
+            <th
+              key={col.index}
+              className="border-b p-2 text-left font-semibold"
+            >
               {col.header}
             </th>
           ))}
         </tr>
       </thead>
       <tbody>
-        {data.map((row: any, index: number) => (
+        {data.map((row, index: number) => (
           <tr key={row.id ?? index}>
-            {columns.map((col: any) => (
-              <td key={col.key} className="border-b p-2">
+            {columns.map((col) => (
+              <td key={col.index} className="border-b p-2">
                 {col.render
-                  ? col.render(row[col.key], row)
-                  : String(row[col.key])}
+                  ? col.render(row[col.index], row)
+                  : String(row[col.index])}
               </td>
             ))}
           </tr>
