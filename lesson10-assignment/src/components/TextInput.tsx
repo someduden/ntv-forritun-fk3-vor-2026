@@ -1,4 +1,5 @@
 import type { ComponentPropsWithoutRef } from 'react';
+import type { InputHTMLAttributes, TextareaHTMLAttributes } from 'react';
 
 type SharedProps = {
   label?: string;
@@ -6,76 +7,79 @@ type SharedProps = {
   error?: string;
 };
 
-type InputProps = SharedProps & { multiline?: false } & ComponentPropsWithoutRef<'input'>;
-type TextareaProps = SharedProps & { multiline: true } & ComponentPropsWithoutRef<'textarea'>;
+type InputProps = SharedProps & {
+  multiline?: false;
+} & ComponentPropsWithoutRef<'input'>;
+type TextareaProps = SharedProps & {
+  multiline: true;
+} & ComponentPropsWithoutRef<'textarea'>;
 
 type TextInputProps = InputProps | TextareaProps;
 
 function TextInput(props: TextInputProps) {
   const { label, hint, error, className } = props;
 
-import type { InputHTMLAttributes, TextareaHTMLAttributes } from 'react';
-
-type BaseProps = {
-  label?: string;
-  hint?: string;
-  error?: string;
-  className?: string;
-};
-
-type InputProps = BaseProps &
-  InputHTMLAttributes<HTMLInputElement> & {
-    multiline?: false;
+  type BaseProps = {
+    label?: string;
+    hint?: string;
+    error?: string;
+    className?: string;
   };
 
-type TextareaProps = BaseProps &
-  TextareaHTMLAttributes<HTMLTextAreaElement> & {
-    multiline?: true;
-  };
+  type InputProps = BaseProps &
+    InputHTMLAttributes<HTMLInputElement> & {
+      multiline?: false;
+    };
 
-type TextInputProps = InputProps | TextareaProps;
+  type TextareaProps = BaseProps &
+    TextareaHTMLAttributes<HTMLTextAreaElement> & {
+      multiline?: true;
+    };
 
-function TextInput(props: TextInputProps) {
-  const { label, hint, error, className } = props;
+  type TextInputProps = InputProps | TextareaProps;
 
-  if (props.multiline) {
-    const textareaProps = props as TextareaProps;
+  function TextInput(props: TextInputProps) {
+    const { label, hint, error, className } = props;
+
+    if (props.multiline) {
+      const textareaProps = props as TextareaProps;
+      return (
+        <div className="flex flex-col gap-1">
+          {label && <label className="text-sm font-medium">{label}</label>}
+          {hint && <span className="text-xs text-gray-500">{hint}</span>}
+
+          <textarea
+            className={`rounded border px-3 py-2 ${
+              error ? 'border-red-500' : 'border-gray-300'
+            } ${className || ''}`}
+            {...textareaProps}
+          />
+
+          {error && <span className="text-sm text-red-500">{error}</span>}
+        </div>
+      );
+    }
+
+    const inputProps = props as InputProps;
     return (
       <div className="flex flex-col gap-1">
         {label && <label className="text-sm font-medium">{label}</label>}
         {hint && <span className="text-xs text-gray-500">{hint}</span>}
-
-        <textarea
-          className={`rounded border px-3 py-2 ${
-            error ? 'border-red-500' : 'border-gray-300'
-          } ${className || ''}`}
-          {...textareaProps}
-        />
-
+        {props.multiline ? (
+          <textarea
+            {...(props as TextareaProps)}
+            className={`rounded border px-3 py-2 ${error ? 'border-red-500' : 'border-gray-300'} ${className || ''}`}
+          />
+        ) : (
+          <input
+            {...(props as InputProps)}
+            className={`rounded border px-3 py-2 ${error ? 'border-red-500' : 'border-gray-300'} ${className || ''}`}
+          />
+        )}
         {error && <span className="text-sm text-red-500">{error}</span>}
       </div>
     );
   }
-
-  const inputProps = props as InputProps;
-  return (
-    <div className="flex flex-col gap-1">
-      {label && <label className="text-sm font-medium">{label}</label>}
-      {hint && <span className="text-xs text-gray-500">{hint}</span>}
-      {props.multiline ? (
-        <textarea
-          {...(props as TextareaProps)}
-          className={`rounded border px-3 py-2 ${error ? 'border-red-500' : 'border-gray-300'} ${className || ''}`}
-        />
-      ) : (
-        <input
-          {...(props as InputProps)}
-          className={`rounded border px-3 py-2 ${error ? 'border-red-500' : 'border-gray-300'} ${className || ''}`}
-        />
-      )}
-      {error && <span className="text-sm text-red-500">{error}</span>}
-    </div>
-  );
 }
 
 export { TextInput };
