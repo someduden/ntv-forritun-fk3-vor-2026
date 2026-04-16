@@ -1,8 +1,18 @@
-// TODO: Type this component so that:
-// 1. `severity` only accepts 'info' | 'warning' | 'error' | 'success'
-// 2. `title` is a required string
-// 3. `onDismiss` is an optional callback with no arguments
-// 4. All remaining native <div> props (className, role, aria-*, etc.) are forwarded and type-checked
+import type { ComponentPropsWithoutRef } from 'react';
+
+type AlertProps = ComponentPropsWithoutRef<'div'> & {
+  severity?: 'info' | 'warning' | 'error' | 'success';
+  title: string;
+  onDismiss?: () => void;
+};
+
+function Alert({ severity = 'info', title, children, onDismiss, className, ...props }: AlertProps) {
+  const severityStyles = {
+    info: 'bg-blue-50 border-blue-200 text-blue-800',
+    warning: 'bg-yellow-50 border-yellow-200 text-yellow-800',
+    error: 'bg-red-50 border-red-200 text-red-800',
+    success: 'bg-green-50 border-green-200 text-green-800',
+  };
 
 const severityStyles = {
   info: 'bg-blue-50 border-blue-200 text-blue-800',
@@ -30,7 +40,7 @@ function Alert({
   return (
     <div
       role="alert"
-      className={`rounded border p-4 ${severityStyles[severity || 'info']} ${className || ''}`}
+      className={`rounded border p-4 ${severityStyles[severity]} ${className || ''}`}
       {...props}
     >
       <div className="flex items-start justify-between">

@@ -1,11 +1,4 @@
-import { useState } from 'react';
-import type { ReactNode } from 'react';
-
-// TODO: Type this render-props component so that:
-// 1. `children` is NOT ReactNode — it must be a function (render prop)
-// 2. The function receives a typed object: { x: number; y: number; isHovering: boolean }
-// 3. The function must return a valid ReactNode
-// If a consumer passes a plain JSX element as children (not a function), TypeScript should error.
+import { useState, type ReactNode } from 'react';
 
 type MouseState = {
   x: number;
@@ -23,9 +16,7 @@ function MouseTracker({ children }: MouseTrackerProps) {
 
   return (
     <div
-      onMouseMove={(e: React.MouseEvent) =>
-        setPosition({ x: e.clientX, y: e.clientY })
-      }
+      onMouseMove={(e) => setPosition({ x: e.clientX, y: e.clientY })}
       onMouseEnter={() => setIsHovering(true)}
       onMouseLeave={() => setIsHovering(false)}
       style={{ minHeight: '200px' }}
