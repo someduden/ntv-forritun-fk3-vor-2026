@@ -9,7 +9,6 @@ import { configureStore, createSlice } from '@reduxjs/toolkit';
 import TaskList from './TaskList';
 
 import * as TaskStories from '../Task/Task.stories';
-import { updateTaskState } from '@/lib/store';
 
 export const MockedState = {
   tasks: [
