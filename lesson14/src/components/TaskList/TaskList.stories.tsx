@@ -19,8 +19,6 @@ type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
   args: {
-    // Shaping the stories through args composition.
-    // The data was inherited from the Default story in Task.stories.tsx.
     tasks: [
       { ...TaskStories.Default.args.task, id: '1', title: 'Task 1' },
       { ...TaskStories.Default.args.task, id: '2', title: 'Task 2' },
@@ -50,8 +48,6 @@ export const Loading: Story = {
 
 export const Empty: Story = {
   args: {
-    // Shaping the stories through args composition.
-    // Inherited data coming from the Loading story.
     ...Loading.args,
     loading: false,
   },
