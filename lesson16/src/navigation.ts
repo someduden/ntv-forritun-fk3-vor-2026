@@ -1,1 +1,1 @@
-export type AppPage = 'home' | 'about';
+export type AppPage = '/home' | '/about';

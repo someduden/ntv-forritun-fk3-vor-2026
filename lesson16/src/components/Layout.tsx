@@ -1,5 +1,6 @@
 import type { AppPage } from '@/navigation';
 import type { ReactNode } from 'react';
+import { Link, Navigate, Outlet } from 'react-router-dom';
 
 type LayoutProps = {
   activePage: AppPage;
@@ -16,7 +17,7 @@ function navButtonClassName(isActive: boolean) {
   ].join(' ');
 }
 
-export function Layout({ activePage, onNavigate, children }: LayoutProps) {
+export function Layout() {
   return (
     <div className="bg-background min-h-screen">
       <header className="border-border bg-card/50 border-b backdrop-blur-sm">
@@ -25,24 +26,15 @@ export function Layout({ activePage, onNavigate, children }: LayoutProps) {
             Lesson 16
           </p>
           <nav className="flex flex-wrap gap-2" aria-label="Main navigation">
-            <button
-              type="button"
-              className={navButtonClassName(activePage === 'home')}
-              onClick={() => onNavigate('home')}
-            >
-              Home
-            </button>
-            <button
-              type="button"
-              className={navButtonClassName(activePage === 'about')}
-              onClick={() => onNavigate('about')}
-            >
-              About
-            </button>
+            <Link to="/">Home</Link>
+            <Link to="/about">About</Link>
+            <Link to="/login">Login</Link>
           </nav>
         </div>
       </header>
-      <main className="mx-auto w-full max-w-6xl px-4 py-8">{children}</main>
+      <main className="mx-auto w-full max-w-6xl px-4 py-8">
+        <Outlet />
+      </main>
     </div>
   );
 }
