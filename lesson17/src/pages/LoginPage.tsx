@@ -13,6 +13,13 @@ import { loginFormSchema } from '@/lib/login-schema';
 import { ROUTES } from '@/navigation';
 import { useState, type FormEvent } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
+import {
+  Show,
+  SignInButton,
+  SignIn,
+  SignUpButton,
+  UserButton,
+} from '@clerk/react';
 
 type LoginLocationState = { from?: { pathname: string } };
 
@@ -53,8 +60,8 @@ export function LoginPage() {
         <CardHeader>
           <CardTitle className="text-2xl">Log in</CardTitle>
           <CardDescription>
-            Enter any username and password that pass validation. After login you
-            can open the protected{' '}
+            Enter any username and password that pass validation. After login
+            you can open the protected{' '}
             <Link
               to={ROUTES.dashboard}
               className="text-primary font-medium underline-offset-4 hover:underline"
@@ -77,7 +84,10 @@ export function LoginPage() {
                 onChange={(e) => {
                   setUsername(e.target.value);
                   if (fieldErrors.username) {
-                    setFieldErrors((prev) => ({ ...prev, username: undefined }));
+                    setFieldErrors((prev) => ({
+                      ...prev,
+                      username: undefined,
+                    }));
                   }
                 }}
                 aria-invalid={Boolean(fieldErrors.username)}
@@ -106,7 +116,10 @@ export function LoginPage() {
                 onChange={(e) => {
                   setPassword(e.target.value);
                   if (fieldErrors.password) {
-                    setFieldErrors((prev) => ({ ...prev, password: undefined }));
+                    setFieldErrors((prev) => ({
+                      ...prev,
+                      password: undefined,
+                    }));
                   }
                 }}
                 aria-invalid={Boolean(fieldErrors.password)}
@@ -130,6 +143,19 @@ export function LoginPage() {
           </form>
         </CardContent>
       </Card>
+
+      <header>
+        <Show when="signed-out">
+          <Button>
+            <SignInButton />
+          </Button>
+          <SignUpButton />
+        </Show>
+        <Show when="signed-in">
+          <UserButton />
+        </Show>
+      </header>
+      <SignIn />
     </div>
   );
 }
